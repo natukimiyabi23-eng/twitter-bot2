@@ -7,24 +7,32 @@ WEBHOOK_URL = "https://discord.com/api/webhooks/1487849417963999244/vTMSJxVxroYN
 
 sent = set()
 
-print("BOT STARTED")
+print("BOT STARTED", flush=True)
 
 while True:
-    print("checking...")
+    try:
+        print("checking...", flush=True)
 
-    feed = feedparser.parse(RSS_URL)
-    print("entries:", len(feed.entries))
+        feed = feedparser.parse(RSS_URL)
+        print("entries:", len(feed.entries), flush=True)
 
-    for entry in feed.entries:
-        if entry.link not in sent:
-            print("sending:", entry.link)
+        for entry in feed.entries:
+            link = getattr(entry, "link", "")
+            title = getattr(entry, "title", "")
 
-            data = {
-                "content": f"📢 新しい投稿！\n{entry.link}"
-            }
-            r = requests.post(WEBHOOK_URL, json=data)
-            print("discord:", r.status_code)
+            if link and link not in sent:
+                print("sending:", link, flush=True)
 
-            sent.add(entry.link)
+                data = {
+                    "content": f"📢 新しい投稿！\n{title}\n{link}"
+                }
+                r = requests.post(WEBHOOK_URL, json=data)
+                print("discord:", r.status_code, flush=True)
 
-    time.sleep(60)
+                sent.add(link)
+
+        time.sleep(60)
+
+    except Exception as e:
+        print("ERROR:", e, flush=True)
+        time.sleep(60)
