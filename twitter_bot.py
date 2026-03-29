@@ -5,7 +5,7 @@ import time
 import feedparser
 import requests
 
-RSS_URL = "https://rsshub.rssforever.com/twitter/user/nototan_"
+RSS_URL = "https://rsshub.app/twitter/user/nototan_"
 WEBHOOK_URL = "https://discord.com/api/webhooks/1487849417963999244/vTMSJxVxroYNc_VWWneRcuROvFfE-cyQyhfK6oqHMKYnmkKnoAkFwXnWzXyKDk90mcGM"
 
 print("BOOT OK", flush=True)
