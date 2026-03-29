@@ -1,3 +1,4 @@
+print("VERSION-999", flush=True)
 import os
 import sys
 import time
